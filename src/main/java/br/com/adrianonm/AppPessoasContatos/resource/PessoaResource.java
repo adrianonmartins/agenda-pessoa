@@ -30,7 +30,7 @@ public class PessoaResource {
 		this.pessoaService = pessoaService;
 	}
 
-	@PostMapping("/new")
+	@PostMapping
 	public ResponseEntity<Pessoa> save(@RequestBody Pessoa pessoa){
 		Pessoa newPessoa = pessoaService.save(pessoa);
 		if(newPessoa == null)
@@ -53,11 +53,23 @@ public class PessoaResource {
 			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok(pessoa);
 	}
-	@PutMapping
-	public ResponseEntity<Pessoa> update(@RequestBody Pessoa pessoa){
-		Pessoa newPessoa = pessoaService.update(pessoa);
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Pessoa> update(@RequestBody Pessoa pessoa,@PathVariable Long id){
+		Optional<Pessoa> pessoaEdit = pessoaService.getById(id);
+		Pessoa newPessoa = pessoaEdit.get();
+		if(pessoaEdit.isPresent()) {
+			newPessoa.setNome(pessoa.getNome());
+			newPessoa.setEndereco(pessoa.getEndereco());
+			newPessoa.setCep(pessoa.getCep());
+			newPessoa.setCidade(pessoa.getCidade());
+			newPessoa.setCidade(pessoa.getUf());
+		}
+
 		if(newPessoa == null)
 			return ResponseEntity.notFound().build();
+		
+		pessoaService.save(newPessoa);
 		return ResponseEntity.ok(newPessoa);
 	}
 	
