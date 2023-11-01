@@ -2,6 +2,7 @@ package br.com.adrianonm.AppPessoasContatos.resource;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.adrianonm.AppPessoasContatos.dto.PessoaDto;
 import br.com.adrianonm.AppPessoasContatos.model.Pessoa;
 import br.com.adrianonm.AppPessoasContatos.service.PessoaService;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api/pessoas")// caminho http://localhost:8080/api/pessoas
+@RequestMapping("/api/pessoas")// http://localhost:8080/api/pessoas
 public class PessoaResource {
 	
 	private PessoaService pessoaService;
@@ -77,5 +79,12 @@ public class PessoaResource {
 	public ResponseEntity<?> delete(@PathVariable Long id){
 		pessoaService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping ("/maladireta/{id}")
+	public ResponseEntity<List<PessoaDto>> findAll(){
+		List<Pessoa> list = pessoaService.findAll();
+		List<PessoaDto> listDto = list.stream().map(obj-> new PessoaDto(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 }

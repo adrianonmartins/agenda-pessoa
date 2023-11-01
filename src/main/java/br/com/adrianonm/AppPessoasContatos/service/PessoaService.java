@@ -58,6 +58,11 @@ public class PessoaService implements PessoaServiceInterface{
 		pessoaRepository.deleteById(id);
 		
 	}
+
+	public List<Pessoa> findAll() {
+		return pessoaRepository.findAll();
+	
+	}
 	
 
 }

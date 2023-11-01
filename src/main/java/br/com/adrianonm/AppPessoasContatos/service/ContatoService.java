@@ -36,9 +36,8 @@ public class ContatoService implements ContatoServiceInterface{
 	public List<Contato> getAll() {
 		return contatoRepository.findAll();
 	}
-
-	@Override
 	
+	@Override
 	public Contato update(Contato contato) {
 		Optional<Contato> upContato = contatoRepository.findById(contato.getId());
 		if(upContato.isPresent()) {
@@ -56,4 +55,5 @@ public class ContatoService implements ContatoServiceInterface{
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
