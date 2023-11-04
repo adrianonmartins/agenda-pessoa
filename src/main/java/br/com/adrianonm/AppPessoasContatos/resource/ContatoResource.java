@@ -32,7 +32,7 @@ public class ContatoResource {
 		this.pessoaService  = pessoaService;
 	}
 	
-	@PostMapping("/pessoas/{id}/contatos")
+	@PostMapping("/pessoas/{id}/contatos") // http://localhost:8080/api/pessoas/id/contatos
 	public ResponseEntity<Contato> save(@RequestBody Contato contato, @PathVariable Long id){
 		Pessoa pessoaContato = pessoaService.getById(id).get();
 		
@@ -49,7 +49,7 @@ public class ContatoResource {
 	}
 	
 
-	@GetMapping("/contatos/{id}")
+	@GetMapping("/contatos/{id}") //http://localhost:8080/api/contatos/id
 	public ResponseEntity<Optional<Contato>> getById(@PathVariable Long id){
 		Optional<Contato> contato = contatoService.getById(id);
 		if(contato == null)
@@ -57,9 +57,9 @@ public class ContatoResource {
 		return ResponseEntity.ok(contato);
 	}
 	
-	@GetMapping("/pessoas/{idPessoa}/contatos")
-	public ResponseEntity<List<Contato>> getContatosByPessoaId(@PathVariable Long id) {
-	    List<Contato> contatos = contatoService.findByPessoaId(id);
+	@GetMapping("/pessoas/{id}/contatos") //http://localhost:8080/api/pessoas/idPessoa/contatos
+	public ResponseEntity<List<Contato>> getContatosPessoa(@PathVariable Long id) {
+	    List<Contato> contatos = contatoService.getContatos(id);
 	    if (contatos.isEmpty()) {
 	        return ResponseEntity.noContent().build();
 	    } else {
@@ -67,7 +67,7 @@ public class ContatoResource {
 	    }
 	}
 
-	@PutMapping("/contatos/{id}")
+	@PutMapping("/contatos/{id}") // http://localhost:8080/api/contatos/id
 	public ResponseEntity<Contato> update(@RequestBody Contato contato,@PathVariable Long id){
 		Optional<Contato> contatoEdit = contatoService.getById(id);
 		Contato newContato = contatoEdit.get();
@@ -82,7 +82,7 @@ public class ContatoResource {
 		return ResponseEntity.ok(newContato);
 	}
 			
-	@DeleteMapping("/contatos/{id}")
+	@DeleteMapping("/contatos/{id}") // http://localhost:8080/api/contatos/id
 	public Contato deleteContato(@PathVariable Long id){
 		return contatoService.delete(id);
 	}

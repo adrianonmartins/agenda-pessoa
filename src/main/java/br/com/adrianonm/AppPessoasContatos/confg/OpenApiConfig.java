@@ -18,9 +18,10 @@ public class OpenApiConfig {
 				.components(new Components().addSecuritySchemes("basicScheme",
 						new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic")))
 				.info(new Info()
-						.title("App Cadastro de produtos")
-						.description("Este aplicativo faz controle de cadastro de produtos")
-						.contact(new Contact().name("Nome").email("email").url("url"))
+						.title("App Agenda de Contatos")
+						.description("Este aplicativo faz controle dos contatos de uma pessoaa")
+						.contact(new Contact().name("Adriano Nascimento Martins").email("adrianonascimentomartins@gmail.com")
+						.url("http://localhost:8080/swagger-ui/index.html"))
 						.version("Versão 0.0.1-SNAPSHOT"));
 	}
 	

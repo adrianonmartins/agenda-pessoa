@@ -43,6 +43,7 @@ public class ContatoService implements ContatoServiceInterface{
 		if(upContato.isPresent()) {
 			Contato newContato = upContato.get();
 			newContato.setTipo(contato.getTipo());
+			
 			newContato.setContato(contato.getContato());
 			return contatoRepository.save(newContato);
 		}
@@ -59,6 +60,11 @@ public class ContatoService implements ContatoServiceInterface{
 		Contato contato = this.getById(id).get();
 		contatoRepository.deleteById(id);
 		return contato;
+	}
+
+	public List<Contato> getContatos(Long pessoaId) {
+		return contatoRepository.findByPessoaId(pessoaId);
+	
 	}
 	
 }

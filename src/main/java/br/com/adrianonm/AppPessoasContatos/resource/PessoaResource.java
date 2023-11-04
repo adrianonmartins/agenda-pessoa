@@ -32,7 +32,7 @@ public class PessoaResource {
 		this.pessoaService = pessoaService;
 	}
 
-	@PostMapping
+	@PostMapping    //http://localhost:8080/api/pessoas
 	public ResponseEntity<Pessoa> save(@RequestBody Pessoa pessoa){
 		Pessoa newPessoa = pessoaService.save(pessoa);
 		if(newPessoa == null)
@@ -40,7 +40,7 @@ public class PessoaResource {
 		return ResponseEntity.ok(newPessoa);
 	}
 	
-	@GetMapping
+	@GetMapping  // http://localhost:8080/api/pessoas
 	public ResponseEntity<List<Pessoa>> getAllPessoas(){
 		List<Pessoa> pessoa = pessoaService.getAll();
 		if(pessoa == null)
@@ -48,7 +48,7 @@ public class PessoaResource {
 		return ResponseEntity.ok(pessoa);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{id}") //http://localhost:8080/api/pessoas/id
 	public ResponseEntity<Optional<Pessoa>> getById(@PathVariable Long id){
 		Optional<Pessoa> pessoa = pessoaService.getById(id);
 		if(pessoa == null)
@@ -56,7 +56,7 @@ public class PessoaResource {
 		return ResponseEntity.ok(pessoa);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/{id}") //http://localhost:8080/api/pessoas/id
 	public ResponseEntity<Pessoa> update(@RequestBody Pessoa pessoa,@PathVariable Long id){
 		Optional<Pessoa> pessoaEdit = pessoaService.getById(id);
 		Pessoa newPessoa = pessoaEdit.get();
@@ -75,13 +75,13 @@ public class PessoaResource {
 		return ResponseEntity.ok(newPessoa);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{id}") //http://localhost:8080/api/pessoas/id
 	public ResponseEntity<?> delete(@PathVariable Long id){
 		pessoaService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
-	@GetMapping ("/maladireta/{id}")
+	@GetMapping ("/maladireta/{id}") //http://localhost:8080/api/pessoas/maladireta/id
 	public ResponseEntity<List<PessoaDto>> findAll(){
 		List<Pessoa> list = pessoaService.findAll();
 		List<PessoaDto> listDto = list.stream().map(obj-> new PessoaDto(obj)).collect(Collectors.toList());
