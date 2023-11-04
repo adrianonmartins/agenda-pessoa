@@ -65,7 +65,7 @@ public class PessoaResource {
 			newPessoa.setEndereco(pessoa.getEndereco());
 			newPessoa.setCep(pessoa.getCep());
 			newPessoa.setCidade(pessoa.getCidade());
-			newPessoa.setCidade(pessoa.getUf());
+			newPessoa.setUf(pessoa.getUf());
 		}
 
 		if(newPessoa == null)

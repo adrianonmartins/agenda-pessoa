@@ -49,11 +49,16 @@ public class ContatoService implements ContatoServiceInterface{
 		return contato;
 
 	}
+	@Override
+	public List<Contato> findByPessoaId(long pessoaId){
+        return contatoRepository.findByPessoaId(pessoaId);
+    }
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+	public Contato delete(Long id) {
+		Contato contato = this.getById(id).get();
+		contatoRepository.deleteById(id);
+		return contato;
 	}
 	
 }

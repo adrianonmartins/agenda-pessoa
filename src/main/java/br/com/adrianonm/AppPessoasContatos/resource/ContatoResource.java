@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +29,7 @@ public class ContatoResource {
 	@Autowired
 	public ContatoResource(ContatoService contatoService, PessoaService pessoaService) {
 		this.contatoService = contatoService;
-		this.pessoaService = pessoaService;
+		this.pessoaService  = pessoaService;
 	}
 	
 	@PostMapping("/pessoas/{id}/contatos")
@@ -58,43 +57,33 @@ public class ContatoResource {
 		return ResponseEntity.ok(contato);
 	}
 	
-//	@GetMapping("/pessoas/{id}/contatos")
-//	public ResponseEntity<List<Contato>> getContatosByPessoaId(@PathVariable Long id) {
-//	    List<Contato> contatos = contatoService.getContatosByPessoaId(id);
-//	    if (contatos.isEmpty()) {
-//	        return ResponseEntity.noContent().build();
-//	    } else {
-//	        return ResponseEntity.ok(contatos);
-//	    }
-//	}
-//	public List<Contato> listContatosPessoa(@PathVariable Long idPessoa){
-//		Pessoa pessoa = pessoaService.getById(idPessoa).get();
-//		
-//		List<Contato> contato = contatoService.getAll();
-//		
-//		return contato;
+	@GetMapping("/pessoas/{idPessoa}/contatos")
+	public ResponseEntity<List<Contato>> getContatosByPessoaId(@PathVariable Long id) {
+	    List<Contato> contatos = contatoService.findByPessoaId(id);
+	    if (contatos.isEmpty()) {
+	        return ResponseEntity.noContent().build();
+	    } else {
+	        return ResponseEntity.ok(contatos);
+	    }
+	}
+
+	@PutMapping("/contatos/{id}")
+	public ResponseEntity<Contato> update(@RequestBody Contato contato,@PathVariable Long id){
+		Optional<Contato> contatoEdit = contatoService.getById(id);
+		Contato newContato = contatoEdit.get();
 		
-		
-//		if(contato == null)
-//			return ResponseEntity.notFound().build();
-//		return ResponseEntity.ok(contato);
-//	}
-	
-//	@PutMapping
-//	public ResponseEntity<Contato> update(@RequestBody Contato contato){
-//		Contato newContato = contatoService.update(contato);
-//		if(newContato == null)
-//			return ResponseEntity.notFound().build();
-//		return ResponseEntity.ok(newContato);
-//	}
-//	
-//	@DeleteMapping("/{id}")
-//	public ResponseEntity<?> delete(@PathVariable Long id){
-//		contatoService.delete(id);
-//		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//	}
-
-
-
+		if (contatoEdit.isPresent()) {
+			newContato.setTipo(contato.getTipo());
+			newContato.setContato(contato.getContato());
+		}
+		if(newContato == null)
+			return ResponseEntity.notFound().build();
+		contatoService.save(newContato);
+		return ResponseEntity.ok(newContato);
+	}
+			
+	@DeleteMapping("/contatos/{id}")
+	public Contato deleteContato(@PathVariable Long id){
+		return contatoService.delete(id);
+	}
 }
- 
